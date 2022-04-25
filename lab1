@@ -1,0 +1,236 @@
+
+STUDENT DATABASE
+
+
+>use Students
+switched to db Students
+
+> db.createCollection("Students")
+{ "ok" : 1 }
+
+> db.Students.insert({_id:1,studName:"Adarsh",Grade:"VII",Hobbies:"Irritating people",DOJ:Date("2017-04-02")})
+WriteResult({ "nInserted" : 1 })
+> db.Students.insert({_id:2,studName:"Abhinandan",Grade:"VI",Hobbies:"Singing",DOJ:Date("2017-04-03")})
+WriteResult({ "nInserted" : 1 })
+> db.Students.insert({_id:3,studName:"Anvitha",Grade:"VI",Hobbies:"Singing",DOJ:Date("2017-04-01")})
+WriteResult({ "nInserted" : 1 })
+
+
+> db.Students.find()
+{ "_id" : 1, "studName" : "Adarsh", "Grade" : "VII", "Hobbies" : "Irritating people", "DOJ" : "Mon Apr 25 2022 11:38:59 GMT+0530 (IST)" }
+{ "_id" : 2, "studName" : "Abhinandan", "Grade" : "VI", "Hobbies" : "Singing", "DOJ" : "Mon Apr 25 2022 11:40:53 GMT+0530 (IST)" }
+{ "_id" : 3, "studName" : "Anvitha", "Grade" : "VI", "Hobbies" : "Singing", "DOJ" : "Mon Apr 25 2022 11:43:41 GMT+0530 (IST)" }
+
+
+> db.Students.find({},{"studName":1})
+{ "_id" : 1, "studName" : "Adarsh" }
+{ "_id" : 2, "studName" : "Abhinandan" }
+{ "_id" : 3, "studName" : "Anvitha" }
+
+
+> db.Students.find({_id:{$eq:1}},{studName:1,Grade:1}).pretty()
+{ "_id" : 1, "studName" : "Adarsh", "Grade" : "VII" }
+
+
+> db.Students.find({Grade:{$ne:"VII"}}).pretty()
+{
+	"_id" : 2,
+	"studName" : "Abhinandan",
+	"Grade" : "VI",
+	"Hobbies" : "Singing",
+	"DOJ" : "Mon Apr 25 2022 11:40:53 GMT+0530 (IST)"
+}
+{
+	"_id" : 3,
+	"studName" : "Anvitha",
+	"Grade" : "VI",
+	"Hobbies" : "Singing",
+	"DOJ" : "Mon Apr 25 2022 11:43:41 GMT+0530 (IST)"
+}
+
+
+db.Students.find({Hobbies:{$eq:"Cricket"},studName:{$eq:"Varun"}})
+{ "_id" : 4, "studName" : "Varun", "Grade" : "VII", "Hobbies" : "Cricket", "DOJ" : ISODate("2017-03-02T00:00:00Z") }
+
+
+> db.Students.find({studName:/a$/}).pretty()
+{
+	"_id" : 3,
+	"studName" : "Anvitha",
+	"Grade" : "VI",
+	"Hobbies" : "Singing",
+	"DOJ" : "Mon Apr 25 2022 11:43:41 GMT+0530 (IST)"
+}
+
+-------------------------------------------------------------------------------------------
+
+BANK DATABASE
+
+
+> use dbBank
+switched to db dbBank
+
+
+> db.createCollection("Bank")
+{ "ok" : 1 }
+
+
+> db.Bank.insert({acct_id:5005,UserName:"Adarsh",Bal:3000})
+WriteResult({ "nInserted" : 1 })
+> db.Bank.insert({acct_id:5006,UserName:"Abhinandan",Bal:3000})
+WriteResult({ "nInserted" : 1 })
+> db.Bank.insert({acct_id:5007,UserName:"Anvitha",Bal:3000})
+WriteResult({ "nInserted" : 1 })
+> db.Bank.update({acct_id:5006},{$set:{"transac":[20,30,40]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Bank.update({acct_id:5005},{$set:{"transac":[20,300,40]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Bank.update({acct_id:5007},{$set:{"transac":[20,300,400]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Bank.find().pretty()
+{
+	"_id" : ObjectId("6266430f7e1e647ae49bc451"),
+	"acct_id" : 5005,
+	"UserName" : "Adarsh",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		300,
+		40
+	]
+}
+{
+	"_id" : ObjectId("626643267e1e647ae49bc452"),
+	"acct_id" : 5006,
+	"UserName" : "Abhinandan",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		30,
+		40
+	]
+}
+{
+	"_id" : ObjectId("6266433b7e1e647ae49bc453"),
+	"acct_id" : 5007,
+	"UserName" : "Anvitha",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		300,
+		400
+	]
+}
+
+
+
+
+> var mycursor=db.Bank.find({acct_id:5007})
+> mycursor
+{ "_id" : ObjectId("6266433b7e1e647ae49bc453"), "acct_id" : 5007, "UserName" : "Anvitha", "Bal" : 3000, "transac" : [ 20, 300, 400 ] }
+
+
+
+> db.Bank.update({acct_id:5006},{$set:{"UserName":"Ankitha"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Bank.find().pretty()
+{
+	"_id" : ObjectId("6266430f7e1e647ae49bc451"),
+	"acct_id" : 5005,
+	"UserName" : "Adarsh",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		300,
+		40
+	]
+}
+{
+	"_id" : ObjectId("626643267e1e647ae49bc452"),
+	"acct_id" : 5006,
+	"UserName" : "Ankitha",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		30,
+		40
+	]
+}
+{
+	"_id" : ObjectId("6266433b7e1e647ae49bc453"),
+	"acct_id" : 5007,
+	"UserName" : "Anvitha",
+	"Bal" : 3000,
+	"transac" : [
+		20,
+		300,
+		400
+	]
+}
+
+---------------------------------------------------------------------------------------------
+
+HOSPITAL DATABASE
+
+> use dbHospital
+switched to db dbHospital
+> db.createCollection("Hospital")
+{ "ok" : 1 }
+
+
+> db.Hospital.insert({_id:1,Name:"suzuki",Disease:"Cough"})
+WriteResult({ "nInserted" : 1 })
+> db.Hospital.insert({_id:2,Name:"Max Verstappen",diseases:["cold","broken leg"]})
+WriteResult({ "nInserted" : 1 })
+> db.Hospital.insert({_id:3,Name:"Checo perez",diseases:["cold","broken leg","Acidity"]})
+WriteResult({ "nInserted" : 1 })
+> db.Hospital.find().pretty()
+{ "_id" : 1, "Name" : "suzuki", "Disease" : "Cough" }
+{
+	"_id" : 2,
+	"Name" : "Max Verstappen",
+	"diseases" : [
+		"cold",
+		"broken leg"
+	]
+}
+{
+	"_id" : 3,
+	"Name" : "Checo perez",
+	"diseases" : [
+		"cold",
+		"broken leg",
+		"Acidity"
+	]
+}
+
+
+
+> var mycursor=db.Hospital.find({Name:"Max Verstappen"})
+> mycursor
+{ "_id" : 2, "Name" : "Max Verstappen", "diseases" : [ "cold", "broken leg" ] }
+
+
+> db.Hospital.update({_id:1},{$set:{Disease:["cough","cold"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Hospital.find().pretty()
+{ "_id" : 1, "Name" : "suzuki", "Disease" : [ "cough", "cold" ] }
+{
+	"_id" : 2,
+	"Name" : "Max Verstappen",
+	"diseases" : [
+		"cold",
+		"broken leg"
+	]
+}
+{
+	"_id" : 3,
+	"Name" : "Checo perez",
+	"diseases" : [
+		"cold",
+		"broken leg",
+		"Acidity"
+	]
+}
+
+
