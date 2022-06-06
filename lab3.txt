@@ -1,0 +1,64 @@
+hduser@bmsce-Precision-T1700:~$ start-all.sh
+hduser@bmsce-Precision-T1700:~$ jps
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /test
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 14 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 10:14 /CSE
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:42 /DIR2
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 12:27 /Dir2
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 10:11 /FFF
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 10:21 /LLL
+drwxr-xr-x   - hduser supergroup          0 2022-06-03 15:09 /dak
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 14:34 /manju
+drwxr-xr-x   - hduser supergroup          0 2022-06-01 10:36 /new
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 10:10 /prac
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 10:16 /prac1
+drwxr-xr-x   - hduser supergroup          0 2022-05-31 10:19 /prac2
+drwxr-xr-x   - hduser supergroup          0 2022-06-06 11:34 /test
+drwxrwxr-x   - hduser supergroup          0 2019-10-09 14:54 /tmp
+drwxr-xr-x   - hduser supergroup          0 2019-08-01 16:03 /user
+
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/WC.txt /test/WC1.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /test/WC1.txt
+A is B and C is D but D is A
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -get /test/WC1.txt /home/hduser/Desktop/WWC.txt
+hduser@bmsce-Precision-T1700:~$ cat /home/hduser/Desktop/WWC.txt
+A is B and C is D but D is A
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/WC.txt /test/WC2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -getmerge /test/WC1.txt /test/WC2.txt /home/hduser/Desktop/Merge2.txt
+hduser@bmsce-Precision-T1700:~$ cat /home/hduser/Desktop/Merge2.txt
+A is B and C is D but D is A
+A is B and C is D but D is A
+
+hduser@bmsce-Precision-T1700:~$ hadoop fs -getfacl /test/
+# file: /test
+# owner: hduser
+# group: supergroup
+user::rwx
+group::r-x
+other::r-x
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cat /test/WC1.txt
+A is B and C is D but D is A
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /ABC
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mv /test /ABC
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /ABC
+Found 1 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-06 11:57 /ABC/test
+
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -mkdir /GGG
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cp  /GGG /FFF
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -put /home/hduser/Desktop/WC.txt /GGG/WC2.txt
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -cp  /GGG /FFF
+hduser@bmsce-Precision-T1700:~$ hdfs dfs -ls /FFF
+Found 2 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-06 12:18 /FFF/GGG
+drwxr-xr-x   - hduser supergroup          0 2022-06-04 09:41 /FFF/abc
+
+
+
